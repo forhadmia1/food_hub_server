@@ -17,6 +17,7 @@ async function run() {
     try {
         await client.connect()
         const Foodcollection = client.db("Food_Hub").collection("Foods");
+        const Cartcollection = client.db("Food_Hub").collection("Carts");
 
         app.post('/foods', async (req, res) => {
             try {
@@ -30,6 +31,18 @@ async function run() {
 
         app.get('/foods', async (req, res) => {
             const data = Foodcollection.find({})
+            const result = await data.toArray()
+            res.send(result)
+        })
+
+        app.post('/order', async (req, res) => {
+            const item = req.body;
+            const result = await Cartcollection.insertOne(item)
+            res.send(result)
+        })
+
+        app.get('/order', async (req, res) => {
+            const data = Cartcollection.find({})
             const result = await data.toArray()
             res.send(result)
         })
