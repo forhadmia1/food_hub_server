@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json())
 app.use(cors())
 
-//Routes
+//Routes middleware
 app.use('/api/v1/foods', foodRoutes)
 app.use('/api/v1/order', orderRoutes)
 

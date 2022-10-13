@@ -18,11 +18,24 @@ module.exports.getAllOrder = async (req, res) => {
 }
 
 module.exports.deleteOrderById = async (req, res) => {
-    const id = req.params;
-    console.log(id)
+    const id = req.params.id;
     const query = { _id: ObjectId(id) }
     const result = await Cartcollection.deleteOne(query)
     if (result.acknowledged) {
-        res.send(id.id)
+        res.send(id)
+    }
+}
+
+module.exports.update = async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const query = { _id: ObjectId(id) }
+    const updatedoc = {
+        $set: { data }
+    }
+
+    const result = await Cartcollection.updateOne(query, updatedoc)
+    if (result.acknowledged) {
+        res.send('update successfully')
     }
 }

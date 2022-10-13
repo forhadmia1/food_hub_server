@@ -12,7 +12,25 @@ module.exports.postAFood = async (req, res) => {
 }
 
 module.exports.getAllFoods = async (req, res) => {
-    const data = Foodcollection.find({})
-    const result = await data.toArray()
-    res.send(result)
+    const query = req.query;
+    if (query.category) {
+        const data = Foodcollection.find(query)
+        const result = await data.toArray()
+        res.send(result)
+    } else {
+        const data = Foodcollection.find({})
+        const result = await data.toArray()
+        res.send(result)
+    }
+}
+
+module.exports.getFoodsByName = async (req, res) => {
+    const query = req.query;
+    console.log(query);
+    if (query.name) {
+        Foodcollection.createIndex({ "name": "text" });
+        const data = Foodcollection.find({ $text: { $search: query.name } })
+        const result = await data.toArray()
+        res.send(result)
+    }
 }
