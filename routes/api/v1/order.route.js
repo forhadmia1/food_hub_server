@@ -4,8 +4,10 @@ const router = express.Router()
 
 router.post('/', orderController.postAOrder)
 
-router.get('/', orderController.getAllOrder)
+// router.get('/', orderController.getAllOrder)
 
-router.delete('/:id', orderController.deleteOrderById)
+// router.delete('/:id', orderController.deleteOrderById)
+
+router.post("/create-payment-intent", orderController.payment)
 
 module.exports = router;
