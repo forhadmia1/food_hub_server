@@ -12,9 +12,12 @@ module.exports.postAOrder = async (req, res) => {
 }
 
 module.exports.getAllOrder = async (req, res) => {
-    const data = Ordercollection.find({})
-    const result = await data.toArray()
-    res.send(result)
+    const email = req.query.email;
+    if (email) {
+        const data = Ordercollection.find({ email })
+        const result = await data.toArray()
+        res.send(result)
+    }
 }
 
 module.exports.updateOrderById = async (req, res) => {
@@ -53,7 +56,6 @@ module.exports.payment = async (req, res) => {
             enabled: true,
         },
     });
-
     res.send({
         clientSecret: paymentIntent.client_secret,
     });
