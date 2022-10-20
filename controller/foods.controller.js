@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const collection = require("../Utils/collections")
 const { Foodcollection } = collection()
 
@@ -32,5 +33,14 @@ module.exports.getFoodsByName = async (req, res) => {
         const data = Foodcollection.find({ $text: { $search: query.name } })
         const result = await data.toArray()
         res.send(result)
+    }
+}
+
+module.exports.deleteFoods = async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: ObjectId(id) };
+    const result = await Foodcollection.deleteOne(filter)
+    if (result.deletedCount > 0) {
+        res.status(200).send({ message: "Successfully delete review" })
     }
 }
