@@ -17,6 +17,10 @@ module.exports.getAllOrder = async (req, res) => {
         const data = Ordercollection.find({ email })
         const result = await data.toArray()
         res.send(result)
+    } else {
+        const data = Ordercollection.find({})
+        const result = await data.toArray()
+        res.send(result)
     }
 }
 
@@ -36,14 +40,16 @@ module.exports.updateOrderById = async (req, res) => {
     }
 }
 
-// module.exports.deleteOrderById = async (req, res) => {
-//     const id = req.params.id;
-//     const query = { _id: ObjectId(id) }
-//     const result = await Ordercollection.deleteOne(query)
-//     if (result.acknowledged) {
-//         res.send(id)
-//     }
-// }
+module.exports.deleteOrderById = async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) }
+    try {
+        const result = await Ordercollection.deleteOne(query)
+        res.status(200).send({ message: 'Successfully delete item!' })
+    } catch (error) {
+        res.status(500).send({ message: 'internal server error!' })
+    }
+}
 
 module.exports.payment = async (req, res) => {
     const { totalAmount } = req.body;

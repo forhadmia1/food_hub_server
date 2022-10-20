@@ -18,3 +18,17 @@ module.exports.addUser = async (req, res) => {
         res.status(200).send({ token: token })
     }
 }
+
+module.exports.getUser = async (req, res) => {
+    const email = req.query.email;
+    console.log(email);
+    const filter = { email }
+    const result = await usercollection.findOne(filter)
+    if (result.isAdmin) {
+        res.send({ isAdmin: true })
+    } else {
+        res.send({
+            isAdmin: false
+        })
+    }
+}

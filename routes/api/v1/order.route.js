@@ -6,6 +6,8 @@ router.post('/', orderController.postAOrder)
 
 router.get('/', orderController.getAllOrder)
 
+router.delete('/:id', orderController.deleteOrderById)
+
 router.put('/:id', orderController.updateOrderById)
 
 router.post("/create-payment-intent", orderController.payment)
