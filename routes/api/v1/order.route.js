@@ -1,15 +1,21 @@
 const express = require('express');
 const orderController = require('../../../controller/order.controller');
+const { verifyAdmin } = require('../../../middleware/verifyAdmin');
+const { verifyToken } = require('../../../middleware/verifyToken');
 const router = express.Router()
 
-router.post('/', orderController.postAOrder)
+router.post('/', verifyToken, orderController.postAOrder)
 
-router.get('/', orderController.getAllOrder)
+router.get('/', verifyToken, orderController.getOrder)
 
-router.delete('/:id', orderController.deleteOrderById)
+router.get('/all', verifyToken, verifyAdmin, orderController.getAllOrders)
 
-router.put('/:id', orderController.updateOrderById)
+router.delete('/:id', verifyToken, verifyAdmin, orderController.deleteOrderById)
 
-router.post("/create-payment-intent", orderController.payment)
+router.put('/:id', verifyToken, orderController.updateOrderById)
+
+router.put('/admin/:id', verifyToken, verifyAdmin, orderController.updateOrderByAdmin)
+
+router.post("/create-payment-intent", verifyToken, orderController.payment)
 
 module.exports = router;

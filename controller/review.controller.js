@@ -12,6 +12,12 @@ module.exports.addReview = async (req, res) => {
     }
 }
 
+module.exports.getReview = async (req, res) => {
+    const cursor = await reviewcollection.find({ approved: true })
+    const result = await cursor.toArray()
+    res.send(result)
+}
+
 module.exports.getAllReview = async (req, res) => {
     const cursor = await reviewcollection.find({})
     const result = await cursor.toArray()

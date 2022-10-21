@@ -11,20 +11,38 @@ module.exports.postAOrder = async (req, res) => {
     }
 }
 
-module.exports.getAllOrder = async (req, res) => {
+module.exports.getOrder = async (req, res) => {
     const email = req.query.email;
     if (email) {
         const data = Ordercollection.find({ email })
         const result = await data.toArray()
         res.send(result)
-    } else {
-        const data = Ordercollection.find({})
-        const result = await data.toArray()
-        res.send(result)
     }
 }
 
+module.exports.getAllOrders = async (req, res) => {
+    const data = Ordercollection.find({})
+    const result = await data.toArray()
+    res.send(result)
+}
+
 module.exports.updateOrderById = async (req, res) => {
+    const data = req.body;
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) }
+    const updateDoc = {
+        $set: {
+            ...data
+        }
+    }
+    const result = await Ordercollection.updateOne(query, updateDoc)
+    console.log(result);
+    if (result.modifiedCount > 0) {
+        res.status(200).send({ message: 'successfully update' })
+    }
+}
+
+module.exports.updateOrderByAdmin = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
     const query = { _id: ObjectId(id) }
