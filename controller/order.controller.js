@@ -71,10 +71,11 @@ module.exports.deleteOrderById = async (req, res) => {
 
 module.exports.payment = async (req, res) => {
     const { totalAmount } = req.body;
+    const amount = totalAmount * 100;
 
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: totalAmount,
+        amount: amount,
         currency: "usd",
         automatic_payment_methods: {
             enabled: true,
