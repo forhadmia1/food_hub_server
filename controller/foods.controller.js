@@ -27,7 +27,6 @@ module.exports.getAllFoods = async (req, res) => {
 
 module.exports.getFoodsByName = async (req, res) => {
     const query = req.query;
-    console.log(query);
     if (query.name) {
         Foodcollection.createIndex({ "name": "text" });
         const data = Foodcollection.find({ $text: { $search: query.name } })

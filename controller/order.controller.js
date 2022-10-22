@@ -36,7 +36,6 @@ module.exports.updateOrderById = async (req, res) => {
         }
     }
     const result = await Ordercollection.updateOne(query, updateDoc)
-    console.log(result);
     if (result.modifiedCount > 0) {
         res.status(200).send({ message: 'successfully update' })
     }
@@ -52,7 +51,6 @@ module.exports.updateOrderByAdmin = async (req, res) => {
         }
     }
     const result = await Ordercollection.updateOne(query, updateDoc)
-    console.log(result);
     if (result.modifiedCount > 0) {
         res.status(200).send({ message: 'successfully update' })
     }
